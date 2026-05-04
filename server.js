@@ -52,7 +52,7 @@ app.use("/quiz", quizRouter);
 // Media Routes
 app.use("/media", mediaRouter);
 
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 async function main() {
   await prisma.$connect();

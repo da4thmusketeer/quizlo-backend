@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "heroku-postbuild": "npx prisma generate && npx prisma migrate deploy"
+  },
+  "engines": {
+    "node": "24.12.0"
   },
   "private": true,
   "prisma": {
