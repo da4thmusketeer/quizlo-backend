@@ -33,6 +33,35 @@ async function signupUser(req, res) {
       });
     }
 
+    // Check if username already exists
+    const existingUsername = await prisma.user.findUnique({
+      where: {
+        username: data.username,
+      },
+    });
+    
+
+    if (existingUsername) {
+      return res.status(409).json({
+        success: false,
+        error: "Username already exists",
+      });
+    }
+
+    // Check if email already exists
+    const existingEmail = await prisma.user.findUnique({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (existingEmail) {
+      return res.status(409).json({
+        success: false,
+        error: "Email already exists",
+      });
+    }
+
     // Generate a unique ID for the user
     const id = generateId("user");
 
@@ -40,8 +69,8 @@ async function signupUser(req, res) {
     const newUser = await prisma.user.create({
       data: {
         id,
-        firstName: data.first_name,
-        lastName: data.last_name,
+        firstName: data.first_name || null,
+        lastName: data.last_name || null,
         email: data.email,
         username: data.username,
         password: await hashPassword(data.password),
@@ -62,7 +91,7 @@ async function signupUser(req, res) {
 
     // Send token as an httpOnly cookie
     res.cookie("token", token, {
-      httpOnly: true,
+      httpOnly: true, // the cookie can't be accessed by client-side scripts
       secure: process.env.NODE_ENV === "production",
       maxAge: Number(process.env.JWT_EXPIRES_IN_MS) || 24 * 60 * 60 * 1000,
     });
