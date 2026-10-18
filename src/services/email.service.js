@@ -1,13 +1,5 @@
-import nodemailer from "nodemailer";
+import { transporter } from "../lib/email.js";
 import "dotenv/config";
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
 
 export const sendResetEmail = async (email, resetURL) => {
   const mailOptions = {
@@ -32,7 +24,6 @@ export const sendResetEmail = async (email, resetURL) => {
     throw new Error(`Failed to send reset email: ${error.message}`);
   }
 };
-
 
 export const sendNewEmailVerification = async (email, verificationURL) => {
   const mailOptions = {

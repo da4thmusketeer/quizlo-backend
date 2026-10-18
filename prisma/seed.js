@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import { prisma } from "../lib/prisma.js";
-import { generateId } from "../utils/id.js";
+import { prisma } from "../src/lib/prisma.js";
+import { generateId } from "../src/utils/id.util.js";
 
 const categories = [
   { name: "General Knowledge", icon: "brain" },

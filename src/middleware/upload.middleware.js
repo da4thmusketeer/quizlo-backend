@@ -1,6 +1,6 @@
 import multer from "multer";
 
-const storage = multer.memoryStorage(); // using memory storage, which means the file is held in your server's RAM as a Buffer object rather than written to disk.
+const storage = multer.memoryStorage();
 
 export function upload() {
   return multer({
@@ -28,5 +28,3 @@ export function upload() {
     },
   });
 }
-
-
